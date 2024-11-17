@@ -3,4 +3,6 @@ IDEA: Basic Encryptor of text files to be able to store your password files on g
 
 Input:
 Numerical Value: Eg: 112121
+Put your file content in input.txt in src/resources //Change to Choose file from system GUI?
+
 

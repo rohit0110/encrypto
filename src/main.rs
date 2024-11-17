@@ -1,4 +1,5 @@
-use std::{io::{self}, num::ParseIntError};
+use std::{fs::File, io::{self, Read}, num::ParseIntError, process::exit};
+
 
 fn main() {
     println!("Welcome to Encrypto! Encrypt your txt files to be stored on any platform you want");
@@ -32,7 +33,19 @@ fn read_numerical_input() -> Result<i64, ParseIntError> {
     value.trim().parse::<i64>() //return either a i64 or ParseInt error as a result
 }
 
-fn read_file() {
+fn read_file() -> String {
+    //FILE NAME INPUT
+    let input_path = "src/resources/input.txt";
+    let mut file = File::open(input_path).expect("Failed to open file"); //CHECK HOW TO HANDLE THIS CASE MORE CLEANLY
+    let mut content = String::new();
+    match file.read_to_string(&mut content) {
+        Ok(_) => {},
+        Err(e) => {
+            println!("Error reading content from file {}. Exiting...",e);
+            exit(1)
+        }
+    };
+    content
 
 }
 
@@ -42,6 +55,8 @@ fn write_file() {
 
 fn encrypt() {
     println!("encrypt!");
+    let content = read_file();
+    println!("Content: {}", content);
 }
 
 fn decrypt() {
