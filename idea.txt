@@ -1,0 +1,13 @@
+Flow
+
+1) Encrypt
+Get input txt file
+Get input: Encryption value to be used
+Encrypt file
+Get output txt file
+
+2) Decrypt
+Get input txt file
+Get input: Decryption value to be used
+Decrypt file
+Get output txt file
