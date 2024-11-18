@@ -4,3 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+sha2 = "0.10"
+chacha20 = "0.9"
+rand = "0.8"
+cipher = "0.4.4"
+base64 = "0.21"
+hex = "0.4"
