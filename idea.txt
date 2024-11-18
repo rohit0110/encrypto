@@ -11,3 +11,11 @@ Get input txt file
 Get input: Decryption value to be used
 Decrypt file
 Get output txt file
+
+Encryption method
+SHA256 -> chacha20 -> file
+
+ToDo
+Add salt when converting password key with SHA-256 to dissuade rainbow tables
+Add Nonce Data, Salt to the Encrypted file
+While Decryption extract Nonce, Salt and Content separately
