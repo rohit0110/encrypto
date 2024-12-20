@@ -15,6 +15,11 @@ Get output txt file
 Encryption method
 SHA256 -> chacha20 -> file
 
+Current State:
+Adding both nonce and Content to output
+Extracting both and decrypting
+need to check more on salt
+
 ToDo
 Add salt when converting password key with SHA-256 to dissuade rainbow tables
 Add Nonce Data, Salt to the Encrypted file
