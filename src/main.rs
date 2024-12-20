@@ -4,6 +4,7 @@ use chacha20::{ChaCha20, Key, Nonce};
 use hex::decode;
 use rand::{Rng, RngCore};
 use sha2::{Digest, Sha256};
+use core::str;
 use std::{
     fs::{File, OpenOptions},
     io::{self, Read, Write},
@@ -22,7 +23,7 @@ fn menu() {
     println!("Anything else to exit");
     match read_input().as_str() {
         "1\n" => encrypt(),
-        // "2\n" => decrypt(),
+        "2\n" => decrypt(),
         _ => println!("Exiting..."),
     }
 }
@@ -116,10 +117,12 @@ fn decrypt() {
             return;
         }
     };
-    // println!("Enter Key");
-    // let key = read_input();
-    // let sha_key = string_to_sha256(key);
-    // let (encrypted_base64, encrypted_nonce) = encrypt_with_chacha(&sha_key, &content);
+    println!("Enter Key");
+    let key = read_input();
+    let sha_key = string_to_sha256(key);
+    let (encrypted_base64, encrypted_nonce) = extract_strings(&content);
+    let decrypted_content = decrypt_from_chacha(encrypted_base64, encrypted_nonce, &sha_key);
+    println!("{decrypted_content}");
         
 }
 
@@ -147,6 +150,18 @@ fn decrypt_from_chacha(
     // Convert the decrypted byte data back to a string (assuming the original content was UTF-8)
 
     String::from_utf8(decrypted_data).expect("Failed to convert decrypted data to string")
+}
+
+fn extract_strings(vec_content: &[u8]) -> (String,String) {
+    let input = str::from_utf8(vec_content).ok().unwrap(); //handle better
+    let separator = "|||{}{}{}|||";
+    match input.find(separator) {
+        Some(index) => {
+            let (encrypted_content,encrypted_nonce) = input.split_at(index);
+            (encrypted_content.to_string(),encrypted_nonce[separator.len()..].to_string())
+        }
+        None => ("NA".to_string(),"NA".to_string())
+    }
 }
 
 fn string_to_sha256(input: String) -> [u8; 32] {
