@@ -103,7 +103,7 @@ fn encrypt_with_chacha(key: &[u8; 32], content: &[u8]) -> (String, String) {
     // Optionally: Encode the encrypted data as Base64 if you need to store or transmit it as text
     let encrypted_base64 = encode(&encrypted_data);
     let encrypted_nonce = encode(&nonce);
-    println!("Encrypted data (Base64): {}", encrypted_base64);
+    // println!("Encrypted data (Base64): {}", encrypted_base64);
 
     (encrypted_base64, encrypted_nonce)
 }
@@ -122,7 +122,7 @@ fn decrypt() {
     let sha_key = string_to_sha256(key);
     let (encrypted_base64, encrypted_nonce) = extract_strings(&content);
     let decrypted_content = decrypt_from_chacha(encrypted_base64, encrypted_nonce, &sha_key);
-    println!("{decrypted_content}");
+    write_file(decrypted_content);
         
 }
 
