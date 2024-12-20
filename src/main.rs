@@ -84,7 +84,8 @@ fn encrypt() {
     let key = read_input();
     let sha_key = string_to_sha256(key);
     let (encrypted_base64, encrypted_nonce) = encrypt_with_chacha(&sha_key, &content);
-    write_file(encrypted_base64); //NEED TO ALSO ADD NONCE WHICH WILL LATER BE EXTRACTED
+    let final_content = encrypted_base64 + "|||{}{}{}|||" + encrypted_nonce.as_str();
+    write_file(final_content); //NEED TO ALSO ADD NONCE WHICH WILL LATER BE EXTRACTED
 }
 
 fn encrypt_with_chacha(key: &[u8; 32], content: &[u8]) -> (String, String) {
@@ -104,6 +105,22 @@ fn encrypt_with_chacha(key: &[u8; 32], content: &[u8]) -> (String, String) {
     println!("Encrypted data (Base64): {}", encrypted_base64);
 
     (encrypted_base64, encrypted_nonce)
+}
+
+fn decrypt() {
+    println!("decrypt!");
+    let content = match read_file_() {
+        Ok(data) => data,
+        Err(e) => {
+            println!("Error reading file: {}", e);
+            return;
+        }
+    };
+    // println!("Enter Key");
+    // let key = read_input();
+    // let sha_key = string_to_sha256(key);
+    // let (encrypted_base64, encrypted_nonce) = encrypt_with_chacha(&sha_key, &content);
+        
 }
 
 fn decrypt_from_chacha(
